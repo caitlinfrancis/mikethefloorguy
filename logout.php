@@ -1,4 +1,5 @@
 <?php
+define("TITLE", "Logged Out | Mike The Floor Guy");
 include('includes/errorreporting.php');
 
 // did the user's browser send a cookie for the session?
@@ -23,5 +24,4 @@ include('includes/header.php');
 <p class="lead">You've been logged out. See you next time!</p>
 
 <?php
-include('includes/footer.php');
 ?>

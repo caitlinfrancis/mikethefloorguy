@@ -1,30 +1,20 @@
 <?php
-    session_start();
+    define("TITLE", "Add Database User | Mike The Floor Guy");
+   session_start();
 
-    // if user is not logged in
     if( !$_SESSION['loggedInUser'] ) {
         
-        // send them to the login page
-        header("Location: index.php");
-    }
+       header("Location: index.php");
+   }
 
-    // connect to database
-    //include('includes/connection.php');
     include('includes/connection.php');
+    include('includes/functions.php');
     include('includes/errorreporting.php');
 
-    // include functions file
-    include('includes/functions.php');
 
-    // if add button was submitted
     if( isset( $_POST['add'] ) ) {
 
-    // set all variables to empty by default
     $username = $password = "";
-    
-    // check to see if inputs are empty
-    // create variables with form data
-    // wrap the data with our function
     
     if( !$_POST["username"] ) {
         $nameError = "Please enter a username <br>";
@@ -53,13 +43,6 @@
     
 }
 
-/*
-MYSQL INSERT QUERY
-
-INSERT INTO users (id, username, password, email, signup_date, biography)
-VALUES (NULL, 'jacksonsmith', 'abc123', 'jack@son.com', CURRENT_TIMESTAMP, 'Hello! I'm Jackson. This is my bio.');
-
-*/
 
 mysqli_close($connection);
 include('includes/header.php');
@@ -71,19 +54,19 @@ include('includes/header.php');
             <form action="<?php echo htmlspecialchars( $_SERVER['PHP_SELF'] ); ?>" method="post">
 
             <div class="form-group col-sm-6">
-                <label for="cust_lname">Username *</label>
+                <label for="username">Username *</label>
                 <input type="text" class="form-control input-lg" name="username"><br><br>
             </div>
 
             <div class="form-group col-sm-6">
-                <label for="cust_lname">Password *</label>
+                <label for="password">Password *</label>
                 <small class="text"><?php echo $passwordError; ?></small>
                 <input type="text" class="form-control input-lg" name="password"><br><br>
             </div>
 
 
             <div class="col-sm-12">
-                <a href="customer.php" type="button" class="btn btn-lg btn-default">Cancel</a>
+                <a type="button" class="btn btn-lg btn-default">Cancel</a>
                 <button type="submit" class="btn btn-lg btn-success pull-right" name="add">Add User</button>
              </div>
 

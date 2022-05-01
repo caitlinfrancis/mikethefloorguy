@@ -1,24 +1,24 @@
-<!DOCTYPE html>
-
-<html>
 
     <head>
-
+    <title><?php echo TITLE; ?></title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Customer Job Management</title>
 
+  
+        <script type="text/javascript">   
+                    window.onload = function() {
+
+                    jQuery('#customer_fname','customer_lname',).attr('maxlength','2');
+                        }
+                    </script> 
+
+
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
     </head>
     
     <body style="padding-top: 60px;">            
@@ -33,7 +33,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="coverpage.php">CUSTOMER<strong>MANAGEMENT</strong></strong>SYSTEM</a>
+                <a class="navbar-brand" >CUSTOMER<strong>MANAGEMENT</strong></strong>SYSTEM</a>
             </div>
 
             <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -44,19 +44,21 @@
                 if ( $_SESSION['loggedInUser'] ) { // if user is logged in
                 ?>
                 <ul class="nav navbar-nav">
-                    <li><a href="customer.php">Customer Contact Information</a></li>
-                    <li><a href="invoice.php">Quote/Invoice Information</a></li>
-                    <li><a href="">Job Details</a></li>
-                    <li><a href="add.php">Add Customer</a></li>
-                    <li><a href="adduserdb.php">Add System User</a></li>
+                    <li><a href="add_invoice.php">Add Quote/Invoice Information &nbsp;</a></li>
+                    <li><a href="invoice.php">Invoice Information &nbsp;</a></li>
+                    <li><a href="">Job Details&nbsp;</a></li>
                     <li><a href="">Profitability</a></li>
+                    <li><a href="customer.php">Customer Contact Information&nbsp;</a></li>
+                    <li><a href="add.php">Add Customer&nbsp;</a></li>
+                    <li><a href="adduserdb.php">Add System User&nbsp;</a></li>
+
 
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <p class="navbar-text">Logged In  | <?php echo $_SESSION['loggedInUser']; ?></p>
+                    <p class="navbar-text">Logged In: <?php echo $_SESSION['loggedInUser']; ?></p>
 
-                    <li><a href="logout.php">Log out</a>/li>
+                    <li><a href="logout.php">| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Log out</a></li>
                 </ul>
                 <?php
                 } else {

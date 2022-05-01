@@ -1,20 +1,22 @@
 <?php
+    define("TITLE", "Customer Page | Mike The Floor Guy");
     session_start();
 ?>
 
-
-<?php  if( !$_SESSION['loggedInUser'] ) {
+<?php 
+if( !$_SESSION['loggedInUser'] ) {
     
-    // send them to the login page
-   header("Location: index.php");
+header("Location: index.php");
 }
 
-// connect to database
+
 include('includes/connection.php');
+include('includes/functions.php');
 include('includes/errorreporting.php');
 
 // query & result
-$query = "SELECT * FROM customer_table";
+$query = "SELECT * FROM customer INNER JOIN address on address.address_id = customer.address_id ORDER BY customer_fname asc";
+
 $result = mysqli_query( $connection, $query );
 
 // check for query string
@@ -50,47 +52,58 @@ include('includes/header.php');
 
 <table class="table table-striped table-bordered">
     <tr>
-        <th>Customer ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-        <th>Phone Number</th>
-        <th>Company</th>
-        <th>Edit</th>
+        <th style="width:10%">First Name</th>
+        <th style="width:10%">Last Name</th>
+        <th style="width:10%">Email</th>
+        <th style="width:15%">Phone Number</th>
+        <th style="width:10%">Company</th>
+        <th style="width:10%">Street Address</th>
+        <th style="width:10%">City</th>
+        <th style="width:5%">State</th>
+        <th style="width:5%">Zip</th>
+        <th style="width:10%">Edit</th>
     </tr>
     
     <?php
     
     if( mysqli_num_rows($result) > 0 ) {
         
-        // we have data!
         // output the data
         
         while( $row = mysqli_fetch_assoc($result) ) {
             echo "<tr>";
             
-            echo "<td>" . $row['cust_id'] . "</td><td>" . $row['cust_fname'] . "</td><td>" . $row['cust_lname'] . "</td><td>" . $row['cust_email'] . "</td><td>" . $row['cust_phonenum'] . "</td><td>" . $row['cust_company'] . "</td>";
+            echo "<td>" . $row['customer_fname'] . "</td><td>" . $row['customer_lname'] . "</td><td>" . $row['customer_email'] 
+            . "</td><td>" . $row['customer_phonenum'] . "</td><td>" . $row['customer_company'] . "</td><td>" . $row['street_address'] 
+            . "</td><td>" . $row['city'] . "</td><td>" . $row['state'] . "</td><td>" . $row['zip'] . "</td>";
 
-            echo '<td><a href="edit.php?id=' . $row['cust_id'] . '" type="button" class="btn btn-primary btn-sm">
+            echo '<td><a href="edit.php?id=' . $row['customer_id'] . '" type="button" class="btn btn-primary btn-sm">
                     <span class="glyphicon glyphicon-edit"></span>
                     </a></td>';
             
             echo "</tr>";
         }
     } else { // if no entries
-        echo "<div class='alert alert-warning'>You have no customers!</div>";
+        echo "<div class='alert alert-info'>You have no customers</div>";
     }
 
     //mysqli_close($connection);
 
     ?>
 
-
 </table>
-
 <tr>
     <td colspan="7"><div class="text-center"><a href="add.php" type="button" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-plus"></span> Add Customer</a></div></td>
 </tr>
+
+<div class="table-responsive">
+
+<div id="live_data"> </div>
+<form method="post" action="excel.php">
+<input type="submit" name="export_excel" class="btn btn-success" value="Export to Excel" />
+</form>
+
+
 
 <?php
 include('includes/footer.php');

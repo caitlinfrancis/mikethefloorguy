@@ -2,7 +2,8 @@
 
         <footer class="text-center">
             <hr>
-            <medium>&diamond; Mike the Floor Guy Database User Interface &diamond;</a> </medium>
+            <lg>&diamond; <a href="help.php" target="_blank"> Help Menu &diamond;</a></lg><br>
+            <lg>&diamond; Mike the Floor Guy Database User Interface &diamond;</a> </lg>
         </footer>
         
         <!-- jQuery -->

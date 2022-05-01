@@ -1,20 +1,25 @@
+
 <?php
+    define("TITLE", "Invoice Information | Mike The Floor Guy");
     session_start();
 ?>
 
-
-<?php  if( !$_SESSION['loggedInUser'] ) {
+<?php 
+if( !$_SESSION['loggedInUser'] ) {
     
-    // send them to the login page
-   header("Location: index.php");
+header("Location: index.php");
 }
 
-// connect to database
 include('includes/connection.php');
-include('includes/errorreporting.php');
+include('includes/functions.php');
+
+
+
 
 // query & result
-$query = "SELECT * FROM quote_invoice";
+$query = "SELECT * FROM invoice INNER JOIN address on address.address_id = invoice.address_id 
+INNER JOIN customer on customer.customer_id = invoice.customer_id ORDER BY invoice_id asc";
+
 $result = mysqli_query( $connection, $query );
 
 // check for query string
@@ -22,15 +27,15 @@ if( isset( $_GET['alert'] ) ) {
     
   
     if( $_GET['alert'] == 'success' ) {
-        $alertMessage = "<div class='alert alert-success'>New quote/invoice information added! <a class='close' data-dismiss='alert'>&times;</a></div>";
+        $alertMessage = "<div class='alert alert-success'>New invoice added! <a class='close' data-dismiss='alert'>&times;</a></div>";
         
     
     } elseif( $_GET['alert'] == 'updatesuccess' ) {
-        $alertMessage = "<div class='alert alert-success'>Quote/invoice information updated! <a class='close' data-dismiss='alert'>&times;</a></div>";
+        $alertMessage = "<div class='alert alert-success'>Invoice updated! <a class='close' data-dismiss='alert'>&times;</a></div>";
     
   
     } elseif( $_GET['alert'] == 'deleted' ) {
-        $alertMessage = "<div class='alert alert-success'>Quote/invoice deleted! <a class='close' data-dismiss='alert'>&times;</a></div>";
+        $alertMessage = "<div class='alert alert-success'>Invoice deleted! <a class='close' data-dismiss='alert'>&times;</a></div>";
     }
       
 }
@@ -41,54 +46,85 @@ mysqli_close($connection);
 include('includes/header.php');
 ?>
 
-<h1>Quote/Invoice Information</h1>
+<h1>Invoice Information</h1>
 
 <?php if(isset($alertMessage)){
     echo $alertMessage; 
 }
 ?>
 
+
+<style type="text/css">
+th {background: #999999 none repeat scroll 0 0 !important; }
+</style>
+
+
 <table class="table table-striped table-bordered">
     <tr>
-        <th>Quote/Invoice ID</th>
-        <th>Address</th>
-        <th>Start Date</th>
-        <th>Total Quote/Invoice Dollar Amount</th>
+        <th style="width:10%"><a href="sortingtbl.php?sort=invoice_id">Invoice ID</a></th>
+        <th style="width:10%"><a href="sortingtbl.php?sort=customer_fname">First Name</a></th>
+        <th style="width:10%"><a href="sortingtbl.php?sort=customer_lname">Last Name</a></th>
+        <th style="width:10%">Street Address</th>
+        <th style="width:10%">City</th>
+        <th style="width:5%">State</th>
+        <th style="width:5%">Zip</th>
+        <th style="width:5%">Start Date</th>
+        <th style="width:5%">End Date</th>
+        <th style="width:5%">Supply Costs</th>
+        <th style="width:5%">Invoice Total</th>
+        <th style="width:5%">Profitability</th>
+        <th style="width:10%">Edit</th>
     </tr>
+
     
     <?php
     
+
+ 
+
     if( mysqli_num_rows($result) > 0 ) {
         
-        // we have data!
         // output the data
         
         while( $row = mysqli_fetch_assoc($result) ) {
             echo "<tr>";
             
-            echo "<td>" . $row['quote_invoice_id'] . "</td><td>" . $row['address_id'] . "</td><td>" . $row['start_date'] . "</td><td>" . $row['total_invoice_amount'] . "</td>";
+            echo "<td>" . $row['invoice_id'] . "</td><td>". $row['customer_fname'] . "</td><td>" . $row['customer_lname'] . "</td><td>" 
+            . $row['street_address'] . "</td><td>" . $row['city'] . "</td><td>" . $row['state'] . "</td><td>" . $row['zip'] . 
+            "</td><td>" . $row['startdate'] . "</td><td>" . $row['enddate'] . "</td><td>" . $row['supplies'] . "</td><td>" 
+            . $row['dollar_amount'] . "</td><td>" . $row['supplies'] . "</td>";
 
-            echo '<td><a href="edit.php?id=' . $row['quote_invoice_id'] . '" type="button" class="btn btn-primary btn-sm">
+            echo '<td><a href="edit_invoice.php?id=' . $row['invoice_id'] . '" type="button" class="btn btn-primary btn-sm">
                     <span class="glyphicon glyphicon-edit"></span>
                     </a></td>';
             
             echo "</tr>";
+
         }
     } else { // if no entries
-        echo "<div class='alert alert-warning'>No Quotes In Database</div>";
+        echo "<div class='alert alert-info'>You have no customers</div>";
     }
 
     //mysqli_close($connection);
 
     ?>
 
-
 </table>
-
 <tr>
-    <td colspan="7"><div class="text-center"><a href="add_invoice.php" type="button" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-plus"></span> Add Quote/Invoice</a></div></td>
+    <td colspan="7"><div class="text-center"><a href="add_invoice.php" type="button" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-plus"></span> Add Invoice</a></div></td>
 </tr>
+
+<div class="table-responsive">
+<div id="live_data"> </div>
+<form method="post" action="excel.php">
+<input type="submit" name="export_excel" class="btn btn-success" value="Export to Excel" />
+</form>
+
+
 
 <?php
 include('includes/footer.php');
 ?>
+
+</body>
+</html>
