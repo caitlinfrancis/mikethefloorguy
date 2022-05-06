@@ -54,22 +54,21 @@ include('includes/header.php');
 ?>
 
 
-<style type="text/css">
-th {background: #999999 none repeat scroll 0 0 !important; }
-</style>
-
-
 <table class="table table-striped table-bordered">
     <tr>
-        <th style="width:10%"><a href="sortingtbl.php?sort=invoice_id">Invoice ID</a></th>
-        <th style="width:10%"><a href="sortingtbl.php?sort=customer_fname">First Name</a></th>
-        <th style="width:10%"><a href="sortingtbl.php?sort=customer_lname">Last Name</a></th>
+        <th style="width:10%" type="sort">Invoice ID</a></th>
+
+    
+
+        <th style="width:10%">First Name</a></th>
+        <th style="width:10%">Last Name</a></th>
         <th style="width:10%">Street Address</th>
         <th style="width:10%">City</th>
         <th style="width:5%">State</th>
         <th style="width:5%">Zip</th>
         <th style="width:5%">Start Date</th>
         <th style="width:5%">End Date</th>
+        <th style="width:5%">Job Status</th>
         <th style="width:5%">Supply Costs</th>
         <th style="width:5%">Invoice Total</th>
         <th style="width:5%">Profitability</th>
@@ -90,9 +89,9 @@ th {background: #999999 none repeat scroll 0 0 !important; }
             echo "<tr>";
             
             echo "<td>" . $row['invoice_id'] . "</td><td>". $row['customer_fname'] . "</td><td>" . $row['customer_lname'] . "</td><td>" 
-            . $row['street_address'] . "</td><td>" . $row['city'] . "</td><td>" . $row['state'] . "</td><td>" . $row['zip'] . 
-            "</td><td>" . $row['startdate'] . "</td><td>" . $row['enddate'] . "</td><td>" . $row['supplies'] . "</td><td>" 
-            . $row['dollar_amount'] . "</td><td>" . $row['supplies'] . "</td>";
+            . $row['street_address'] . "</td><td>" . $row['city'] . "</td><td>" . $row['state'] . "</td><td>" . $row['zip'] . "</td><td>" . $row['startdate'] . "</td>
+            <td>" . $row['enddate'] . "</td><td>" . $row['job_status'] . "</td><td>" . $row['supplies'] . "</td><td>" . $row['invoice_total'] . "</td>
+            <td>" . $row['profitability'] . "</td>";
 
             echo '<td><a href="edit_invoice.php?id=' . $row['invoice_id'] . '" type="button" class="btn btn-primary btn-sm">
                     <span class="glyphicon glyphicon-edit"></span>
@@ -105,11 +104,15 @@ th {background: #999999 none repeat scroll 0 0 !important; }
         echo "<div class='alert alert-info'>You have no customers</div>";
     }
 
+    
     //mysqli_close($connection);
 
     ?>
 
+
+
 </table>
+
 <tr>
     <td colspan="7"><div class="text-center"><a href="add_invoice.php" type="button" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-plus"></span> Add Invoice</a></div></td>
 </tr>

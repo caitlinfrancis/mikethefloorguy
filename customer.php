@@ -50,6 +50,7 @@ include('includes/header.php');
 }
 ?>
 
+<div class ='container'>
 <table class="table table-striped table-bordered">
     <tr>
         <th style="width:10%">First Name</th>
@@ -92,6 +93,8 @@ include('includes/header.php');
     ?>
 
 </table>
+<div>
+
 <tr>
     <td colspan="7"><div class="text-center"><a href="add.php" type="button" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-plus"></span> Add Customer</a></div></td>
 </tr>
@@ -99,7 +102,7 @@ include('includes/header.php');
 <div class="table-responsive">
 
 <div id="live_data"> </div>
-<form method="post" action="excel.php">
+<form method="post" action="generatepdf.php">
 <input type="submit" name="export_excel" class="btn btn-success" value="Export to Excel" />
 </form>
 

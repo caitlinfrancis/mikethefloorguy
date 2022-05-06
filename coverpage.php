@@ -1,11 +1,12 @@
-<?php
-    define("TITLE", "Cover Page | Mike The Floor Guy");
-    session_start();
-    include('includes/connection.php');
-?>
-
-
 <body>
+
+<?php
+session_start();
+define("TITLE", "Cover Page | Mike The Floor Guy");
+    
+    include('includes/connection.php');
+    
+?>
 
   <div class="container">
       <p class="lead">Welcome <?php echo $_SESSION['loggedInUser']; ?>!</br>
@@ -27,6 +28,5 @@
     </body>
 
     <?php include('includes/header.php'); ?>    
-
 
 <?php include('includes/footer.php'); ?>

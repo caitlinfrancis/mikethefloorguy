@@ -1,7 +1,6 @@
 <?php
-define("TITLE", "Help Menu | Mike The Floor Guy");
 session_start();
-
+define("TITLE", "Help Menu | Mike The Floor Guy");
 
 if( !$_SESSION['loggedInUser'] ) {
 

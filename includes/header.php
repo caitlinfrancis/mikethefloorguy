@@ -1,5 +1,36 @@
 
     <head>
+
+    <html>
+<head>
+<title>...</title>
+<style type="text/css">
+table {
+margin: 1px;
+}
+
+th {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 1.2em;
+background: #666;
+color: #FFF;
+padding: 2px 6px;
+border-collapse: separate;
+border: 1px solid #000;
+}
+
+td {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 1em;
+border: 1px solid #DDD;
+}
+</style>
+</head>
+<body>
+
+
+
+
     <title><?php echo TITLE; ?></title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,10 +75,9 @@
                 if ( $_SESSION['loggedInUser'] ) { // if user is logged in
                 ?>
                 <ul class="nav navbar-nav">
-                    <li><a href="add_invoice.php">Add Quote/Invoice Information &nbsp;</a></li>
-                    <li><a href="invoice.php">Invoice Information &nbsp;</a></li>
-                    <li><a href="">Job Details&nbsp;</a></li>
-                    <li><a href="">Profitability</a></li>
+                    <li><a href="add_invoice.php">Add Invoice &nbsp;</a></li>
+                    <li><a href="invoice.php">Review and Edit Invoice Information &nbsp;</a></li>
+                    <li><a href="">Profitability Reports</a></li>
                     <li><a href="customer.php">Customer Contact Information&nbsp;</a></li>
                     <li><a href="add.php">Add Customer&nbsp;</a></li>
                     <li><a href="adduserdb.php">Add System User&nbsp;</a></li>
@@ -77,3 +107,7 @@
     </nav>
         
     <div class="container">
+
+
+    </body>
+</html>

@@ -29,17 +29,26 @@ if( mysqli_num_rows($result) > 0 ) {
 
 
        // $streetAddress = $city = $state = $zip = 
-        $startDate = $row['startdate'];
-        $endDate = $row['endate'];
-        $supplies = $row['supplies'];
-        $totalAmount = $row['dollar_amount'];
-        $jobDescription = $row['job_description'];
-        
+
         $cFirstName = $row['customer_fname'];
         $cLastName = $row['customer_lname'];
         $cEmail = $row['customer_email'];
         $cPhoneNum = $row['customer_phonenum'];
         $cCompany = $row['customer_company'];
+
+        $startDate = $row['startdate'];
+        $endDate = $row['endate'];
+        $supplies = $row['supplies'];
+        $totalAmount = $row['invoice_total'];
+        $jobDescription = $row['job_description'];
+        $jobStatus = $row['job_status'];
+
+        $city = $row['city'];
+        $state = $row['state'];
+        $streetAddress= $row['street_address'];
+        $zip = $row['zip'];
+
+
 
     }
 } else { // no results returned
@@ -56,6 +65,18 @@ if( isset($_POST['update']) ) {
     $cEmail = validateFormData($_POST["customer_email"] );
     $cPhoneNum = validateFormData($_POST["customer_phonenum"] );
     $cCompany = validateFormData($_POST["customer_company"] );
+    
+    $startDate = validateFormData($_POST["startdate"] );
+    $endDate = validateFormData($_POST["endate"] );
+    $supplies = validateFormData($_POST["supplies"] );
+    $totalAmount = validateFormData($_POST["invoice_total"] );
+    $jobDescription = validateFormData($_POST["job_description"] );
+    $jobStatus = validateFormData($_POST["job_status"] );
+
+    $city = validateFormData($_POST["city"] );
+    $state = validateFormData($_POST["state"] );
+    $streetAddress= validateFormData($_POST["street_address"] );
+    $zip = validateFormData($_POST["zip"] );
 
     
     // new database query & result
@@ -120,62 +141,89 @@ include('includes/header.php');
 <?php echo $alertMessage; ?>
 
 <form action="<?php echo htmlspecialchars( $_SERVER['PHP_SELF'] ); ?>?id=<?php echo $cId; ?>" method="post" class="row">
-    <div class="form-group col-sm-6">
-        <label for="customer_fname">First Name</label>
-        <input type="text" class="form-control input-lg" id="customer_fname" name="customer_fname" value="<?php echo $cFirstName; ?>">
+<div class="form-group col-sm-6">
+        <label for="customer_fname">First Name *</label>
+        <input type="text" maxlength="25" class="form-control input-lg" id="customer_fname" name="customer_fname" value="<?php echo $cFirstName; ?>">
     </div>
+
     <div class="form-group col-sm-6">
-        <label for="customer_lname">Last Name</label>
-        <input type="text" class="form-control input-lg" id="customer_lname" name="customer_lname" value="<?php echo $cLastName; ?>">
+        <label for="customer_lname">Last Name *</label>
+        <input type="text" maxlength="25" class="form-control input-lg" id="customer_lname" name="customer_lname" value="<?php echo $cLastName; ?>" >
     </div>
+
     <div class="form-group col-sm-6">
-        <label for="customer_email">Email</label>
-        <input type="text" class="form-control input-lg" id="customer_email" name="customer_email" value="<?php echo $cEmail; ?>">
+        <label for="customer_email">Email *</label>
+        <input type="email" maxlength="50" class="form-control input-lg" id="customer_email" name="customer_email" value="<?php echo $cEmail; ?>">
     </div>
+
     <div class="form-group col-sm-6">
-        <label for="customer_phonenum">Phone Number</label>
-        <input type="text" class="form-control input-lg" id="customer_phonenum" name="customer_phonenum" value="<?php echo $cPhoneNum; ?>">
+        <label for="customer_phonenum">Phone Number *</label>
+        <input type="tel" class="form-control input-lg"  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required id="customer_phonenum" name="customer_phonenum" 
+        value="<?php echo $cPhoneNum; ?>">
+        <small>Format: 123-456-7809</small>
     </div>
+
     <div class="form-group col-sm-6">
-        <label for="street_address">Street Address </label> 
-        <input type="text" class="form-control input-lg" id="street_address" name="street_address" value="<?php echo $streetAddress; ?>">
+        <label for="street_address">Street Address *</label>
+        <input type="text" maxlength="45" class="form-control input-lg" id="street_address" name="street_address" value="<?php echo $streetAddress; ?>">
     </div>
+
     <div class="form-group col-sm-6">
-        <label for="city">City </label> 
-        <input type="text" class="form-control input-lg" id="city" name="city" value="<?php echo $city; ?>">
+        <label for="city">City *</label>
+        <input type="text" maxlength="45" class="form-control input-lg" id="city" name="city" value="<?php echo $city; ?>">
     </div>
+
+    <div class="form-group form-group col-sm-6">
+        <label for="state">State *</label>
+        <input type="text" maxlength="2" autocapitalize="on" class="form-control input-lg" id="state" name="state" value="<?php echo $state; ?>">
+    </div>
+
     <div class="form-group col-sm-6">
-        <label for="state">State </label>
-        <input type="text" class="form-control input-lg" id="state" name="state" value="<?php echo $state; ?>">
+        <label for="zip">Zip Code *</label>
+        <input type="number" min="0" maxlength="10" pattern="[0-9]{5}-[0-9]{4}" class="form-control input-lg" id="zip" name="zip" value="<?php echo $zip; ?>">
+        <small>Format: 63367-1122. Please enter all zero's for the last 4 digits of the zipcode if it is unknown</small>
     </div>
-    <div class="form-group col-sm-6">
-        <label for="zip">Zip Code </label> <label>
-        <input type="number" class="form-control input-lg" id="zip" name="zip" value="<?php echo $zip; ?>">
-    </div>
+
     <div class="form-group col-sm-6">
         <label for="customer_company">Company</label>
-        <input type="text" class="form-control input-lg" id="customer_company" name="customer_company" value="<?php echo $cCompany; ?>">
+        <input type="text" maxlength="50" input type="search" class="form-control input-lg" id="customer_company" name="customer_company" value="<?php echo $cCompany; ?>">
     </div> 
+
     <div class="form-group col-sm-6">
-        <label for="startdate">Start Date </label>
+        <label for="startdate">Start Date *</label>
         <input type="date" class="form-control input-lg" id="startdate" name="startdate" value="<?php echo $startDate; ?>">
     </div>
+
     <div class="form-group col-sm-6">
         <label for="enddate">End Date</label>
         <input type="date" class="form-control input-lg" id="enddate" name="enddate" value="<?php echo $endDate; ?>">
     </div>
+
     <div class="form-group col-sm-6">
-        <label for="supplies">Supplies Cost </label> <label>
-        <input type="number" step="0.01" max="8" class="form-control input-lg" id="supplies" name="supplies" value="<?php echo $supplies; ?>">
+        <label for="supplies">Supplies Cost *</label>
+        <input type="number" step="0.01" maxlength="12" min="0" class="form-control input-lg" id="supplies" name="supplies" value="<?php echo $supplies; ?>">
     </div>
+
     <div class="form-group col-sm-6">
-        <label for="dollar_amount">Invoice Total</label>
-        <input type="number" step="0.01" max="8" class="form-control input-lg" id="dollar_amount" name="dollar_amount" value="<?php echo $totalAmount; ?>">
+        <label for="invoice_total">Invoice Total *</label>
+        <input type="number" step="0.01" maxlength="12" min="0" class="form-control input-lg" id="invoice_total" name="invoice_total" value="<?php echo $totalAmount; ?>">
     </div>
+
+    <div class="form-group col-sm-6">
+        <label for="job_status">Job Status *</label>
+        <input type="text" class="form-control input-lg" id="job_status" name="job_status" list="Status" value="<?php echo $jobStatus; ?>">
+        <datalist id ="Status">
+            <option value="new"></option>
+            <option value="pending"></option>
+            <option value="complete"></option>
+        </datalist>
+    </div>
+
     <div class="form-group col-sm-6">
         <label for="job_description">Job Description</label>
-        <input type="text" class="form-control input-lg" id="job_description" name="job_description" value="<?php echo $jobDescription; ?>">
+        <input type="text" maxlength="255" class="form-control input-lg" id="job_description" name="job_description" value="<?php echo $jobDescription; ?>">
     </div>
+
     <div class="col-sm-12">
         <hr>
         <button type="submit" class="btn btn-lg btn-danger pull-left" name="confirm-delete">Delete</button>
