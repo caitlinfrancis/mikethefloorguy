@@ -1,15 +1,10 @@
 <?php
-define("TITLE", "Delect Customer | Mike The Floor Guy");
+define("TITLE", "Delete Customer | Mike The Floor Guy");
 function deleteRecord() {
 
-    $server = 'localhost';
-    $username = 'root';
-    $password = '';
-    $databasename = 'floorguy_database';
-
-    //creating a connection to the database
-
-    $connection = mysqli_connect($server, $username, $password, $databasename);
+    include('includes/connection.php');
+    include('includes/functions.php');
+    include('includes/errorreporting.php');
 
     //check if connection was succesful or not
     if(!$connection) {
@@ -32,8 +27,8 @@ function deleteRecord() {
     //Close Connection
     mysqli_close($connection);
 
-    //Redirecting user back to main page index.php
-    header( 'location: index.php' );
+    //Redirecting user back to page
+    header( 'location: customer.php' );
 
     }
 

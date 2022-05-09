@@ -6,7 +6,7 @@
 <?php 
 if( !$_SESSION['loggedInUser'] ) {
     
-header("Location: index.php");
+header("Location: login.php");
 }
 
 

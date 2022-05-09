@@ -1,4 +1,8 @@
-        </div><!-- end .container -->
+  
+  <html>
+      <body>
+           
+      </div><!-- end .container -->
 
         <footer class="text-center">
             <hr>

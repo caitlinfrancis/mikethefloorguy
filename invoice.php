@@ -1,4 +1,3 @@
-
 <?php
     define("TITLE", "Invoice Information | Mike The Floor Guy");
     session_start();
@@ -12,8 +11,7 @@ header("Location: index.php");
 
 include('includes/connection.php');
 include('includes/functions.php');
-
-
+include('includes/errorreporting.php');
 
 
 // query & result
@@ -27,15 +25,15 @@ if( isset( $_GET['alert'] ) ) {
     
   
     if( $_GET['alert'] == 'success' ) {
-        $alertMessage = "<div class='alert alert-success'>New invoice added! <a class='close' data-dismiss='alert'>&times;</a></div>";
+        $alertMessage = "<div class='alert alert-success'>New invoice added<a class='close' data-dismiss='alert'>&times;</a></div>";
         
     
     } elseif( $_GET['alert'] == 'updatesuccess' ) {
-        $alertMessage = "<div class='alert alert-success'>Invoice updated! <a class='close' data-dismiss='alert'>&times;</a></div>";
+        $alertMessage = "<div class='alert alert-success'>Invoice updated<a class='close' data-dismiss='alert'>&times;</a></div>";
     
   
     } elseif( $_GET['alert'] == 'deleted' ) {
-        $alertMessage = "<div class='alert alert-success'>Invoice deleted! <a class='close' data-dismiss='alert'>&times;</a></div>";
+        $alertMessage = "<div class='alert alert-success'>Invoice deleted<a class='close' data-dismiss='alert'>&times;</a></div>";
     }
       
 }
@@ -58,8 +56,6 @@ include('includes/header.php');
     <tr>
         <th style="width:10%" type="sort">Invoice ID</a></th>
 
-    
-
         <th style="width:10%">First Name</a></th>
         <th style="width:10%">Last Name</a></th>
         <th style="width:10%">Street Address</th>
@@ -74,12 +70,8 @@ include('includes/header.php');
         <th style="width:5%">Profitability</th>
         <th style="width:10%">Edit</th>
     </tr>
-
-    
     <?php
     
-
- 
 
     if( mysqli_num_rows($result) > 0 ) {
         
@@ -101,15 +93,13 @@ include('includes/header.php');
 
         }
     } else { // if no entries
-        echo "<div class='alert alert-info'>You have no customers</div>";
+        echo "<div class='alert alert-info'>No invoices to display</div>";
     }
 
     
     //mysqli_close($connection);
 
     ?>
-
-
 
 </table>
 
@@ -123,11 +113,10 @@ include('includes/header.php');
 <input type="submit" name="export_excel" class="btn btn-success" value="Export to Excel" />
 </form>
 
-
-
 <?php
 include('includes/footer.php');
 ?>
 
 </body>
 </html>
+

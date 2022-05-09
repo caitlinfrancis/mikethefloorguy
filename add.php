@@ -1,14 +1,19 @@
+<style>
+    <?php include 'CSS/default.css'; ?>
+</style>
+
 <?php
 define("TITLE", "Add Customer | Mike The Floor Guy");
 session_start();
 
 if( !$_SESSION['loggedInUser'] ) {
 
-   header("Location: index.php");
+   header("Location: login.php");
 }
 
 include('includes/connection.php');
 include('includes/functions.php');
+include('includes/errorreporting.php');
 
 if( isset( $_POST['add'] ) ) {
     
@@ -125,7 +130,6 @@ if(isset($addressAlertMessage)){
 }
 ?>
 
-
 <h1>Add Customer</h1>
 
 
@@ -167,8 +171,9 @@ if(isset($addressAlertMessage)){
         <input type="text" class="form-control input-lg" id="customer_company" name="customer_company" value="<?php echo $cCompany; ?>">
     </div> 
     <div class="col-sm-12">
-            <a href="customer.php" type="button" class="btn btn-lg btn-default">Cancel</a>
-            <button type="submit" class="btn btn-lg btn-success pull-right" name="add">Add Customer</button>
+        <!--<a href="customer.php" style="background-color:red;color:white" type="button" class="btn btn-lg btn-default">Cancel</a>-->
+        <a href="customer.php" type="button" class="btn btn-lg btn-default cancel">Cancel</a>
+        <button type="submit" class="btn btn-lg btn-success pull-right" name="add">Add Customer</button>
     </div>
 </form>
 

@@ -1,5 +1,8 @@
 <?php
 define("TITLE", "Logged Out | Mike The Floor Guy");
+
+include('includes/connection.php');
+include('includes/functions.php');
 include('includes/errorreporting.php');
 
 // did the user's browser send a cookie for the session?
@@ -15,6 +18,7 @@ session_unset();
 
 // destroy the session
 session_destroy();
+header( "Location: index.php" );
 
 include('includes/header.php');
 ?>
