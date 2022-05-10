@@ -5,7 +5,7 @@ define("TITLE", "Help Menu | Mike The Floor Guy");
 
 if( !$_SESSION['loggedInUser'] ) {
 
-   header("Location: index.php");
+   header("Location: login.php");
 }
 
 include('includes/connection.php');
@@ -16,10 +16,11 @@ include('includes/errorreporting.php');
 <body>
 
   <div class="container">
-      <p class="lead">Welcome to the Help Menu</br>
-      Please select a link below that will guide you to the section you are seeking assistance with</p>
+      <p class="lead">Welcome to the Help Menu</br></p>
 
-      <p class="lead"> This menu opened in a second screen, so please feel free to toggle between the menu and this help page as needed<br>
+      <p class="lead"> This menu opened in a second screen, so please feel free to toggle between the menu and this help page as needed<br></br>
+
+      Excel Export : The excel export indicates an error with compatability. Please select yes, no data will be lost and selecting yes will result in your report populating
 
     </body>
 

@@ -1,11 +1,6 @@
 <?php
-    define("TITLE", "Add Database User | Mike The Floor Guy");
    session_start();
 
-    if( !$_SESSION['loggedInUser'] ) {
-        
-       header("Location: index.php");
-   }
 
     include('includes/connection.php');
     include('includes/functions.php');

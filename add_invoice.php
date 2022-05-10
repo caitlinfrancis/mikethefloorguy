@@ -1,6 +1,5 @@
 
 <?php
-define("TITLE", "Add Invoice Information  | Mike The Floor Guy");
 session_start();
 
 if( !$_SESSION['loggedInUser'] ) {
@@ -63,12 +62,15 @@ if( isset( $_POST['add'] ) ) {
 
     if( !$_POST["zip"] ) {
         $zipError = "This is a required field";
+    } elseif (strlen($_POST["zip"]) < 5){
+        $zipLengthError = "Zip code must be 5 digits";
+        $zip = $_POST["zip"];
     } else {
-        $zip= validateFormData( $_POST["zip"] );
+        $zip = validateFormData($_POST["zip"] );
     }
 
     if( !$_POST["startdate"] ) {
-        $startDataError = "This is a required field";
+        $startDateError = "This is a required field";
     } else {
         $startDate= validateFormData( $_POST["startdate"] );
     }
@@ -115,7 +117,7 @@ if( isset( $_POST['add'] ) ) {
     $jobDescription = validateFormData( $_POST["job_description"] );
     
     // if required fields have data
-    if( $cFirstName && $cLastName && $cPhoneNum && $cEmail && $streetAddress && $city && $state && $zip && $startDate && $endDate && $supplies && $totalAmount && $jobStatus) {
+    if( $cFirstName && $cLastName && $cPhoneNum && $cEmail && $streetAddress && $city && $state && $zip && (strlen($zip) == 5) && $startDate && $endDate && $supplies && $totalAmount && $jobStatus) {
 
         // first checking to see if the customer already exists
         $selectCustomerQuery = "SELECT * FROM `customer` WHERE customer_fname = '$cFirstName' and customer_lname = '$cLastName' and customer_phonenum = '$cPhoneNum' 
@@ -194,66 +196,6 @@ if(isset($addressAlertMessage)){
 
 <h1>Add Invoice</h1>
 
-<html>
-  <head>
-    <style>
- /* Popup container */
-.popup {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-}
-
-/* The actual popup (appears on top) */
-.popup .popuptext {
-  visibility: hidden;
-  width: 160px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 8px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -80px;
-}
-
-/* Popup arrow */
-.popup .popuptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
-
-/* Toggle this class when clicking on the popup container (hide and show the popup) */
-.popup .show {
-  visibility: visible;
-  -webkit-animation: fadeIn 1s;
-  animation: fadeIn 1s
-}
-
-/* Add animation (fade in the popup) */
-@-webkit-keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
-
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity:1 ;}
-}
-      
-    </style>
-  </head>
-</html>
-
 <form action="<?php echo htmlspecialchars( $_SERVER['PHP_SELF'] ); ?>" method="post" class="row">
     <div class="form-group col-sm-6">
         <label for="customer_fname">First Name *</label><label><?php echo '<font color="red">' . $cFNameError. '</font><br>'; ?></label>
@@ -291,68 +233,67 @@ if(isset($addressAlertMessage)){
     </div>
 
     <div class="form-group form-group col-sm-6">
-        <label for="state">State *</label>
-        <label><?php echo '<font color="red">' . $stateError. '</font><br>'; ?></label>
+        <label for="state">State *</label><label><?php echo '<font color="red">' . $stateError. '</font><br>'; ?></label>
         <select class="form-control input-lg" id="state" name="state" list="state" value="<?php echo $state; ?>">
-            <option value="none" selected disabled hidden>Please select an option</option>
-            <option value="AL">Alabama</option>
-            <option value="AK">Alaska</option>
-            <option value="AZ">Arizona</option>
-            <option value="AR">Arkansas</option>
-            <option value="CA">California</option>
-            <option value="CO">Colorado</option>
-            <option value="CT">Connecticut</option>
-            <option value="DE">Delaware</option>
-            <option value="FL">Florida</option>
-            <option value="GA">Georgia</option>
-            <option value="HI">Hawaii</option>
-            <option value="ID">Idaho</option>
-            <option value="IL">Illinois</option>
-            <option value="IN">Indiana</option>
-            <option value="IA">Iowa</option>
-            <option value="KS">Kansas</option>
-            <option value="KY">Kentucky</option>
-            <option value="LA">Louisiana</option>
-            <option value="ME">Maine</option>
-            <option value="MD">Maryland</option>
-            <option value="MA">Massachusetts</option>
-            <option value="MI">Michigan</option>
-            <option value="MN">Minnesota</option>
-            <option value="MS">Mississippi</option>
-            <option value="MO">Missouri</option>
-            <option value="MT">Montana</option>
-            <option value="NE">Nebraska</option>
-            <option value="NV">Nevada</option>
-            <option value="NH">New Hampshire</option>
-            <option value="NJ">New Jersey</option>
-            <option value="NM">New Mexico</option>
-            <option value="NY">New York</option>
-            <option value="NC">North Carolina</option>
-            <option value="ND">North Dakota</option>
-            <option value="OH">Ohio</option>
-            <option value="OK">Oklahoma</option>
-            <option value="OR">Oregon</option>
-            <option value="PA">Pennsylvania</option>
-            <option value="RI">Rhode Island</option>
-            <option value="SC">South Carolina</option>
-            <option value="SD">South Dakota</option>
-            <option value="TN">Tennessee</option>
-            <option value="TX">Texas</option>
-            <option value="UT">Utah</option>
-            <option value="VT">Vermont</option>
-            <option value="VA">Virginia</option>
-            <option value="WA">Washington</option>
-            <option value="WV">West Virginia</option>
-            <option value="WI">Wisconsin</option>
-            <option value="WY">Wyoming</option>
+        <option value="none" selected disabled hidden>Please select an option</option>
+            <option value="AL" <?php if("AL" == $state) { ?> selected = "selected" <?php }?>>Alabama</option>
+            <option value="AK" <?php if("AK" == $state) { ?> selected = "selected" <?php }?>>Alaska</option>
+            <option value="AZ" <?php if("AZ" == $state) { ?> selected = "selected" <?php }?>>Arizona</option>
+            <option value="AR" <?php if("AR" == $state) { ?> selected = "selected" <?php }?>>Arkansas</option>
+            <option value="CA" <?php if("CA" == $state) { ?> selected = "selected" <?php }?>>California</option>
+            <option value="CO" <?php if("CO" == $state) { ?> selected = "selected" <?php }?>>Colorado</option>
+            <option value="CT" <?php if("CT" == $state) { ?> selected = "selected" <?php }?>>Connecticut</option>
+            <option value="DE" <?php if("DE" == $state) { ?> selected = "selected" <?php }?>>Delaware</option>
+            <option value="FL" <?php if("FL" == $state) { ?> selected = "selected" <?php }?>>Florida</option>
+            <option value="GA" <?php if("GA" == $state) { ?> selected = "selected" <?php }?>>Georgia</option>
+            <option value="HI" <?php if("HI" == $state) { ?> selected = "selected" <?php }?>>Hawaii</option>
+            <option value="ID" <?php if("ID" == $state) { ?> selected = "selected" <?php }?>>Idaho</option>
+            <option value="IL" <?php if("IL" == $state) { ?> selected = "selected" <?php }?>>Illinois</option>
+            <option value="IN" <?php if("IN" == $state) { ?> selected = "selected" <?php }?>>Indiana</option>
+            <option value="IA" <?php if("IA" == $state) { ?> selected = "selected" <?php }?>>Iowa</option>
+            <option value="KS" <?php if("KS" == $state) { ?> selected = "selected" <?php }?>>Kansas</option>
+            <option value="KY" <?php if("KY" == $state) { ?> selected = "selected" <?php }?>>Kentucky</option>
+            <option value="LA" <?php if("LA" == $state) { ?> selected = "selected" <?php }?>>Louisiana</option>
+            <option value="ME" <?php if("ME" == $state) { ?> selected = "selected" <?php }?>>Maine</option>
+            <option value="MD" <?php if("MD" == $state) { ?> selected = "selected" <?php }?>>Maryland</option>
+            <option value="MA" <?php if("MA" == $state) { ?> selected = "selected" <?php }?>>Massachusetts</option>
+            <option value="MI" <?php if("MI" == $state) { ?> selected = "selected" <?php }?>>Michigan</option>
+            <option value="MN" <?php if("MN" == $state) { ?> selected = "selected" <?php }?>>Minnesota</option>
+            <option value="MS" <?php if("MS" == $state) { ?> selected = "selected" <?php }?>>Mississippi</option>
+            <option value="MO" <?php if("MO" == $state) { ?> selected = "selected" <?php }?>>Missouri</option>
+            <option value="MT" <?php if("MT" == $state) { ?> selected = "selected" <?php }?>>Montana</option>
+            <option value="NE" <?php if("NE" == $state) { ?> selected = "selected" <?php }?>>Nebraska</option>
+            <option value="NV" <?php if("NV" == $state) { ?> selected = "selected" <?php }?>>Nevada</option>
+            <option value="NH" <?php if("NH" == $state) { ?> selected = "selected" <?php }?>>New Hampshire</option>
+            <option value="NJ" <?php if("NJ" == $state) { ?> selected = "selected" <?php }?>>New Jersey</option>
+            <option value="NM" <?php if("NM" == $state) { ?> selected = "selected" <?php }?>>New Mexico</option>
+            <option value="NY" <?php if("NY" == $state) { ?> selected = "selected" <?php }?>>New York</option>
+            <option value="NC" <?php if("NC" == $state) { ?> selected = "selected" <?php }?>>North Carolina</option>
+            <option value="ND" <?php if("ND" == $state) { ?> selected = "selected" <?php }?>>North Dakota</option>
+            <option value="OH" <?php if("OH" == $state) { ?> selected = "selected" <?php }?>>Ohio</option>
+            <option value="OK" <?php if("OK" == $state) { ?> selected = "selected" <?php }?>>Oklahoma</option>
+            <option value="OR" <?php if("OR" == $state) { ?> selected = "selected" <?php }?>>Oregon</option>
+            <option value="PA" <?php if("PA" == $state) { ?> selected = "selected" <?php }?>>Pennsylvania</option>
+            <option value="RI" <?php if("RI" == $state) { ?> selected = "selected" <?php }?>>Rhode Island</option>
+            <option value="SC" <?php if("SC" == $state) { ?> selected = "selected" <?php }?>>South Carolina</option>
+            <option value="SD" <?php if("SD" == $state) { ?> selected = "selected" <?php }?>>South Dakota</option>
+            <option value="TN" <?php if("TN" == $state) { ?> selected = "selected" <?php }?>>Tennessee</option>
+            <option value="TX" <?php if("TX" == $state) { ?> selected = "selected" <?php }?>>Texas</option>
+            <option value="UT" <?php if("UT" == $state) { ?> selected = "selected" <?php }?>>Utah</option>
+            <option value="VT" <?php if("VT" == $state) { ?> selected = "selected" <?php }?>>Vermont</option>
+            <option value="VA" <?php if("VA" == $state) { ?> selected = "selected" <?php }?>>Virginia</option>
+            <option value="WA" <?php if("WA" == $state) { ?> selected = "selected" <?php }?>>Washington</option>
+            <option value="WV" <?php if("WV" == $state) { ?> selected = "selected" <?php }?>>West Virginia</option>
+            <option value="WI" <?php if("WI" == $state) { ?> selected = "selected" <?php }?>>Wisconsin</option>
+            <option value="WY" <?php if("WY" == $state) { ?> selected = "selected" <?php }?>>Wyoming</option>
         </select>
     </div>
 
     <div class="form-group col-sm-6">
-        <label for="zip">Zip Code *</label>
-        <label><?php echo '<font color="red">' . $zipError. '</font><br>'; ?></label>
-        <input type="text" min="0" pattern="\d*" maxlength="5" minlength="5" 
-        class="form-control input-lg" id="zip" name="zip" value="<?php echo $zip; ?>">
+        <label for="zip">Zip Code *</label><label><?php echo '<font color="red">' . $zipError. '</font><br>'; ?></label>
+        <label><?php echo '<font color="red">' . $zipLengthError. '</font><br>'; ?></label>
+        <input type="number" min="0" maxlength="5" minlength="5" oninput="this.value=this.value.slice(0,this.dataset.maxlength)"
+        class="form-control input-lg" id="zip" name="zip" value="<?php echo $zip; ?>">        
     </div>
 
     <div class="form-group col-sm-6">
@@ -361,14 +302,12 @@ if(isset($addressAlertMessage)){
     </div> 
 
     <div class="form-group col-sm-6">
-        <label for="startdate">Start Date *</label><label><?php echo '<font color="red">' . $startDataError. '</font><br>'; ?></label>
+        <label for="startdate">Start Date *</label><label><?php echo '<font color="red">' . $startDateError. '</font><br>'; ?></label>
         <input type="date" class="form-control input-lg" id="startdate" name="startdate" value="<?php echo $startDate; ?>">
     </div>
 
     <div class="form-group col-sm-6">
-        <label for="enddate">End Date *</label>
-            <label><?php echo '<font color="red">' . $endDateBeforeStartDateError. '</font><br>'; ?></label>
-            <label><?php echo '<font color="red">' . $endDateError. '</font><br>'; ?></label>
+        <label for="enddate">End Date *</label><label><?php echo '<font color="red">' . $endDateBeforeStartDateError. '</font><br>'; ?></label><label><?php echo '<font color="red">' . $endDateError. '</font><br>'; ?></label>
         <input type="date" class="form-control input-lg" id="enddate" name="enddate" value="<?php echo $endDate; ?>">
     </div>
 

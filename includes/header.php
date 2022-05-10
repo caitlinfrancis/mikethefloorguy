@@ -1,43 +1,13 @@
-<head>
+
 <html>
-<script type="text/javascript"
-    src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript">
-    $(document).ready(function() {
-        // javascript & jquery code
+<head>
+ <style>
 
-    const $dropdown = $(".dropdown");
-    const $dropdownToggle = $(".dropdown-toggle");
-    const $dropdownMenu = $(".dropdown-menu");
-    const showClass = "show";
- 
-    $(window).on("load resize", function() {
-    if (this.matchMedia("(min-width: 768px)").matches) {
-        $dropdown.hover(
-        function() {
-            const $this = $(this);
-            $this.addClass(showClass);
-            $this.find($dropdownToggle).attr("aria-expanded", "true");
-            $this.find($dropdownMenu).addClass(showClass);
-        },
-        function() {
-            const $this = $(this);
-            $this.removeClass(showClass);
-            $this.find($dropdownToggle).attr("aria-expanded", "false");
-            $this.find($dropdownMenu).removeClass(showClass);
-        });
-            } else {
-                $dropdown.off("mouseenter mouseleave");
-            }
-    });
-});
-</script>
 
-<head> 
-<style type="text/css">
-table {
-margin: 1px;
+    table {
+margin: 5px;
 }
+
 
 th {
 font-family: Arial, Helvetica, sans-serif;
@@ -79,18 +49,48 @@ input[type=number] {
     -moz-appearance:textfield;
 }
 
-</style>
-</head>
-<body>
+  </style>
 
+
+<script type="text/javascript"
+    src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        // javascript & jquery code
+
+    const $dropdown = $(".dropdown");
+    const $dropdownToggle = $(".dropdown-toggle");
+    const $dropdownMenu = $(".dropdown-menu");
+    const showClass = "show";
+ 
+    $(window).on("load resize", function() {
+    if (this.matchMedia("(min-width: 768px)").matches) {
+        $dropdown.hover(
+        function() {
+            const $this = $(this);
+            $this.addClass(showClass);
+            $this.find($dropdownToggle).attr("aria-expanded", "true");
+            $this.find($dropdownMenu).addClass(showClass);
+        },
+        function() {
+            const $this = $(this);
+            $this.removeClass(showClass);
+            $this.find($dropdownToggle).attr("aria-expanded", "false");
+            $this.find($dropdownMenu).removeClass(showClass);
+        });
+            } else {
+                $dropdown.off("mouseenter mouseleave");
+            }
+    });
+});
+</script>
+
+<body style="padding-top: 80px;">
         <title>Customer Job Management</title>
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-    </head>
-    
-    <body style="padding-top: 80px;">            
+     
     <nav class="navbar navbar-expand-lg navbar-fixed-top navbar-inverse">
         
         <div class="container-fluid">
@@ -112,12 +112,14 @@ input[type=number] {
 
                     <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Invoices
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invoices
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
                         <a class="dropdown-item" href="add_invoice.php">Add Invoice</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="invoice.php">View & Edit Invoices</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="add_invoice_existing_customer.php">Add Invoice for Existing Customer</a>
                         <div class="dropdown-divider"></div>
                     </div>
                     </li>
@@ -134,10 +136,7 @@ input[type=number] {
                         <div class="dropdown-divider"></div>
                     </div>
                     </li>
-                    
-                    <li><a href="">Profitability Reports&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                     <li><a href="adduserdb.php">Add System User&nbsp;</a></li>
-                    <li><a href="states.php">Add System User&nbsp;</a></li>
 
                 </ul>
 
@@ -161,9 +160,10 @@ input[type=number] {
         </div>
 
     </nav>
+    </body>
         
-    <div class="container">
-
+    <div class="container-fluid">
 
     </body>
+    </head>
 </html>

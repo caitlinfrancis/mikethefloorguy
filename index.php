@@ -16,13 +16,13 @@ define("TITLE", "Cover Page | Mike The Floor Guy");
 
 
 
-      <p class="lead"> Please select from the navigation links above to enter customer and job related data<br>
-      A help menu is listed at the bottom of each page to assist as needed</p>
+      <p class="lead"> Please select Login from the top right on the navigation bar to enter the management portal<br>
+      A help menu is listed at the bottom of each page to assist as needed and there is additional contextual assistance on several pages</p>
 
 
       <html> 
       <?php 
-      echo "<img src='mikelogo.png' />"; 
+      echo "<img src='logo.png' />"; 
       ?> 
       </html> 
 

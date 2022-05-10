@@ -4,7 +4,6 @@ session_start();
 
 // if user is not logged in
 if( !$_SESSION['loggedInUser'] ) {
-    
     header("Location: login.php");
 }
 
@@ -141,6 +140,9 @@ if( isset($_POST['update']) ) {
     if( !$_POST["zip"] ) {
         $zipError = "This is a required field";
         $zip = "";
+    } elseif (strlen($_POST["zip"]) < 5){
+        $zipLengthError = "Zip code must be 5 digits";
+        $zip = $_POST["zip"];
     } else {
         $zip = validateFormData($_POST["zip"] );
     }
@@ -159,7 +161,7 @@ if( isset($_POST['update']) ) {
     $jobDescription = validateFormData($_POST["job_description"] );
     
     // if required fields have data
-    if( $cFirstName && $cLastName && $cPhoneNum && $cEmail && $streetAddress && $city && $state && $zip && $startDate && $endDate && $supplies && $totalAmount && $jobStatus) {
+    if( $cFirstName && $cLastName && $cPhoneNum && $cEmail && $streetAddress && $city && $state && $zip && (strlen($zip) == 5) && $startDate && $endDate && $supplies && $totalAmount && $jobStatus) {
         // new database query & result
         $query = "UPDATE invoice INNER JOIN address on address.address_id = invoice.address_id 
         INNER JOIN customer on customer.customer_id = invoice.customer_id
@@ -268,8 +270,7 @@ include('includes/header.php');
     </div>
 
     <div class="form-group form-group col-sm-6">
-        <label for="state">State *</label>
-        <label><?php echo '<font color="red">' . $stateError. '</font><br>'; ?></label>
+        <label for="state">State *</label><label><?php echo '<font color="red">' . $stateError. '</font><br>'; ?></label>
         <select class="form-control input-lg" id="state" name="state" list="state" value="<?php echo $state; ?>">
             <option value="none" selected disabled hidden>Please select an option</option>
             <option value="AL" <?php if("AL" == $state) { ?> selected = "selected" <?php }?>>Alabama</option>
@@ -326,9 +327,8 @@ include('includes/header.php');
     </div>
 
     <div class="form-group col-sm-6">
-        <label for="zip">Zip Code *</label>
-        <label><?php echo '<font color="red">' . $zipError. '</font><br>'; ?></label>
-        <input type="text" min="0" pattern="\d*" maxlength="5" minlength="5" 
+        <label for="zip">Zip Code *</label><label><?php echo '<font color="red">' . $zipError. '</font><br>'; ?></label><label><?php echo '<font color="red">' . $zipLengthError. '</font><br>'; ?></label>
+        <input type="number" min="0" maxlength="5" minlength="5" oninput="this.value=this.value.slice(0,this.dataset.maxlength)"
         class="form-control input-lg" id="zip" name="zip" value="<?php echo $zip; ?>">
     </div>
 
@@ -377,7 +377,6 @@ include('includes/header.php');
         <label for="job_description">Job Description</label>
         <input type="text" maxlength="255" class="form-control input-lg" id="job_description" name="job_description" value="<?php echo $jobDescription; ?>">
     </div>
-
 
 
     <div class="col-sm-12">

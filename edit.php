@@ -97,7 +97,7 @@ if( isset($_POST['update']) ) {
         $zipError = "This is a required field";
         $zip = "";
     } elseif (strlen($_POST["zip"]) < 5){
-        $zipLengthError = "Zip-code must be 5 digits";
+        $zipLengthError = "Zip code must be 5 digits";
         $zip = $_POST["zip"];
     } else {
         $zip = validateFormData($_POST["zip"] );
@@ -175,34 +175,42 @@ include('includes/header.php');
 <form action="<?php echo htmlspecialchars( $_SERVER['PHP_SELF'] ); ?>?id=<?php echo $cId; ?>" method="post" class="row">
 
     <div class="form-group col-sm-6">
-        <label for="customer_fname">First Name</label>
+        <label for="customer_fname">First Name *</label><label><?php echo '<font color="red">' . $cFNameError. '</font><br>'; ?></label>
         <input type="text" maxlength="25" class="form-control input-lg" id="customer_fname" name="customer_fname" value="<?php echo $cFirstName; ?>">
     </div>
+
     <div class="form-group col-sm-6">
-        <label for="customer_lname">Last Name</label>
+        <label for="customer_lname">Last Name *</label><label><?php echo '<font color="red">' . $cLNameError. '</font><br>'; ?></label>
         <input type="text" maxlength="25" class="form-control input-lg" id="customer_lname" name="customer_lname" value="<?php echo $cLastName; ?>" >
     </div>
-    <div class="form-group col-sm-6">
-        <label for="customer_email">Email</label>
+
+    <div class="form-group col-sm-6 popup">
+        <label for="customer_email" >Email *</label><a href="#" data-toggle="tooltip" 
+        title="Please ensure the email format is @domain.com. An example is abcd@gmail.com">&nbsp;&nbsp;Format Assistance</a>
+        <label><?php echo '<font color="red">' . $cEmailError. '</font><br>'; ?></label>
         <input type="email" maxlength="50" pattern=".*.com" class="form-control input-lg" id="customer_email" name="customer_email" value="<?php echo $cEmail; ?>">
     </div>
+
     <div class="form-group col-sm-6">
-        <label for="customer_phonenum">Phone Number</label>
+        <label for="customer_phonenum">Phone Number *</label><a href="#" data-toggle="tooltip" 
+            title="An example of the required phone number format is 123-444-5678">&nbsp;&nbsp;Format Assistance</a>
+        <label><?php echo '<font color="red">' . $phoneNumError. '</font><br>'; ?></label>
         <input type="tel" class="form-control input-lg" maxlength="12"  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required id="customer_phonenum" name="customer_phonenum" 
             value="<?php echo $cPhoneNum; ?>">
     </div>
+
     <div class="form-group col-sm-6">
-        <label for="street_address">Street Address *</label>
+        <label for="street_address">Street Address *</label><label><?php echo '<font color="red">' . $streetAddressError. '</font><br>'; ?></label>
         <input type="text" maxlength="45" class="form-control input-lg" id="street_address" name="street_address" value="<?php echo $streetAddress; ?>">
     </div>
 
     <div class="form-group col-sm-6">
-        <label for="city">City *</label>
+        <label for="city">City *</label><label><?php echo '<font color="red">' . $cityError. '</font><br>'; ?></label>
         <input type="text" maxlength="45" class="form-control input-lg" id="city" name="city" value="<?php echo $city; ?>">
     </div>
 
     <div class="form-group form-group col-sm-6">
-        <label for="state">State *</label>
+        <label for="state">State *</label><label><?php echo '<font color="red">' . $stateError. '</font><br>'; ?></label>
         <select class="form-control input-lg" id="state" name="state" list="state" value="<?php echo $state; ?>">
             <option value="none" selected disabled hidden>Please select an option</option>
             <option value="AL" <?php if("AL" == $state) { ?> selected = "selected" <?php }?>>Alabama</option>
@@ -259,9 +267,7 @@ include('includes/header.php');
     </div>
 
     <div class="form-group col-sm-6">
-        <label for="zip">Zip Code *</label>
-        <label><?php echo '<font color="red">' . $zipError. '</font><br>'; ?></label>
-        <label><?php echo '<font color="red">' . $zipLengthError. '</font><br>'; ?></label>
+        <label for="zip">Zip Code *</label><label><?php echo '<font color="red">' . $zipError. '</font><br>'; ?></label><label><?php echo '<font color="red">' . $zipLengthError. '</font><br>'; ?></label>
         <input type="number" min="0" maxlength="5" minlength="5" oninput="this.value=this.value.slice(0,this.dataset.maxlength)"
         class="form-control input-lg" id="zip" name="zip" value="<?php echo $zip; ?>">        
     </div>
@@ -273,7 +279,6 @@ include('includes/header.php');
 
     <div class="col-sm-12">
         <hr>
-        <!-- <button type="submit" class="btn btn-lg btn-danger pull-left" name="confirm-delete">Delete</button> -->
         <a href="customer.php" type="button" class="btn btn-lg btn-default">Cancel</a>
         <div class="pull-right">
             <button type="submit" class="btn btn-lg btn-success" name="update">Update</button>
