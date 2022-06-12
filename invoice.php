@@ -178,10 +178,24 @@ include('includes/header.php');
 
 
 
-<?php
-include('includes/footer.php');
-?>
+<html>
+      <body>
 
+      </div><!-- end .container -->
+
+        <footer class="text-center">
+            <hr>
+            <lg>&diamond; <a href="help_invoice.php" target="_blank"> Help Menu &diamond;</a></lg><br>
+            <lg>&diamond; Mike the Floor Guy Database User Interface &diamond;</a> </lg>
+        </footer>
+        
+        <!-- jQuery -->
+        <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+        
+        <!-- Bootstrap JS -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </body>
+</html>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
